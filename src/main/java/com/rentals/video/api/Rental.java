@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Rental {
 	//A rental has a one to one relationship with a film
+	//TODO Film could just be a string name
 	private Film film;//New/regular/old
 	private int days;
 	private Date dueDate;
