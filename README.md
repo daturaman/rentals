@@ -1,5 +1,9 @@
 # Rentals
 
+# Considerations
+- How to represent the film inventory - file or db? Sql or NoSql?
+- How to represent the three film types - New release, regular and oldie.
+
 How to start the Rentals application
 ---
 

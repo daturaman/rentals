@@ -1,14 +1,22 @@
-/*
- * <copyright>
- *
- * Copyright (c) 2010-2017 Gresham Technologies plc. All rights reserved.
- *
- * </copyright>
- */
 package com.rentals.video.api;
 
 /**
  * @author mcarter
  */
 public class Film {
+
+	private String title;
+	private FilmType filmType;
+
+	public String getTitle() {
+		return title;
+	}
+
+	public FilmType getFilmType() {
+		return filmType;
+	}
+
+	public enum FilmType {
+		NEW_RELEASE, REGULAR, OLDIE
+	}
 }
