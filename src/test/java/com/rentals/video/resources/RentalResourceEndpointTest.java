@@ -32,9 +32,9 @@ public class RentalResourceEndpointTest {
 			.build();
 
 	@Test
-	public void canRentalOneFilmAndCalculateTotal(){
-		Film predator = new Film("Predator", Film.FilmType.OLDIE);
-		Rental rental = new Rental(predator, 3);
+	public void canRentOneFilmAndCalculateTotal(){
+		Film predator = new Film(1, "Predator", Film.FilmType.OLDIE);
+		Rental rental = new Rental("predator", 3);
 		Response resp = resources.client().target("/rentals")
 								 .request().post(Entity.entity(Collections.singletonList(rental), MediaType.APPLICATION_JSON_TYPE));
 		System.out.println(resp);

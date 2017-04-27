@@ -7,16 +7,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Film {
 
+	private Integer id;
 	private String title;
-	private FilmType filmType;
-	private boolean rented;
+	private FilmType type;
 
 	public Film() {
 	}
 
-	public Film(String title, FilmType filmType) {
+	public Film(Integer id, String title, FilmType type) {
+		this.id = id;
 		this.title = title;
-		this.filmType = filmType;
+		this.type = type;
+	}
+
+	public Integer getId() {
+		return id;
 	}
 
 	@JsonProperty
@@ -25,12 +30,30 @@ public class Film {
 	}
 
 	@JsonProperty
-	public FilmType getFilmType() {
-		return filmType;
+	public FilmType getType() {
+		return type;
 	}
 
-	public boolean isRented() {
-		return rented;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Film film = (Film) o;
+		if (!getId().equals(film.getId()))
+			return false;
+		if (!getTitle().equals(film.getTitle()))
+			return false;
+		return getType() == film.getType();
+	}
+
+	@Override
+	public int hashCode() {
+		int result = getId().hashCode();
+		result = 31 * result + getTitle().hashCode();
+		result = 31 * result + getType().hashCode();
+		return result;
 	}
 
 	public enum FilmType {

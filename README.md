@@ -4,6 +4,10 @@
 - How to represent the film inventory - file or db? Sql or NoSql?
 - How to represent the three film types - New release, regular and oldie.
 
+#https://nbsoftsolutions.com/blog/getting-started-with-dropwizard-testing.html
+#http://www.dropwizard.io/1.1.0/docs/manual/jdbi.html
+#http://jdbi.org/sql_object_api_queries/
+
 How to start the Rentals application
 ---
 
