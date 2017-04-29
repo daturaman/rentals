@@ -7,56 +7,46 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class Film {
 
-	private Integer id;
-	private String title;
-	private FilmType type;
+    private String title;
+    private FilmType type;
 
-	public Film() {
-	}
+    public Film() {
+    }
 
-	public Film(Integer id, String title, FilmType type) {
-		this.id = id;
-		this.title = title;
-		this.type = type;
-	}
+    public Film(String title, FilmType type) {
+        this.title = title;
+        this.type = type;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    @JsonProperty
+    public String getTitle() {
+        return title;
+    }
 
-	@JsonProperty
-	public String getTitle() {
-		return title;
-	}
+    @JsonProperty
+    public FilmType getType() {
+        return type;
+    }
 
-	@JsonProperty
-	public FilmType getType() {
-		return type;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		Film film = (Film) o;
-		if (!getId().equals(film.getId()))
-			return false;
-		if (!getTitle().equals(film.getTitle()))
-			return false;
-		return getType() == film.getType();
-	}
+        Film film = (Film) o;
 
-	@Override
-	public int hashCode() {
-		int result = getId().hashCode();
-		result = 31 * result + getTitle().hashCode();
-		result = 31 * result + getType().hashCode();
-		return result;
-	}
+        if (!title.equals(film.title)) return false;
+        return type == film.type;
+    }
 
-	public enum FilmType {
-		NEW_RELEASE, REGULAR, OLDIE
-	}
+    @Override
+    public int hashCode() {
+        int result = title.hashCode();
+        result = 31 * result + type.hashCode();
+        return result;
+    }
+
+    public enum FilmType {
+        NEW_RELEASE, REGULAR, OLDIE
+    }
 }

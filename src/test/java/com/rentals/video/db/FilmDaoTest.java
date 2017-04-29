@@ -1,17 +1,16 @@
 package com.rentals.video.db;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.Collections;
-import java.util.List;
-
+import com.rentals.video.api.Film;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 
-import com.rentals.video.api.Film;
+import java.util.Collections;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class FilmDaoTest {
 
@@ -25,8 +24,8 @@ public class FilmDaoTest {
 		handle = dbi.open();
 		FilmDao filmDao = handle.attach(FilmDao.class);
 		filmDao.createTable();
-		filmList = Collections.singletonList(new Film(1, "Predator", Film.FilmType.OLDIE));
-		filmDao.insert(filmList);
+        filmList = Collections.singletonList(new Film("Predator", Film.FilmType.OLDIE));
+        filmDao.insert(filmList);
 	}
 
 	@After

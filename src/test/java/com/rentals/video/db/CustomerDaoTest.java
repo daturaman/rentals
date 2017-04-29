@@ -16,13 +16,14 @@ public class CustomerDaoTest {
 	private Handle handle;
 	private List<Customer> customers;
 	private DBI dbi;
+    private CustomerDao customerDao;
 
-	@Before
-	public void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
 		dbi = new DBI("jdbc:h2:mem:test");
 		handle = dbi.open();
-		CustomerDao customerDao = handle.attach(CustomerDao.class);
-		customerDao.createTable();
+        customerDao = handle.attach(CustomerDao.class);
+        customerDao.createTable();
         customers = Collections.singletonList(new Customer("Bob", 250, 10));
         customerDao.insert(customers);
 	}
@@ -34,8 +35,15 @@ public class CustomerDaoTest {
 
 	@Test
 	public void canFindCustomerByName(){
-		CustomerDao customerDao = dbi.onDemand(CustomerDao.class);
+        //CustomerDao customerDao = dbi.onDemand(CustomerDao.class);
         Customer bob = customerDao.findByName("Bob");
         assertEquals(customers.get(0), bob);
+    }
+
+    @Test
+    public void canUpdateCustomerPoints() {
+        customerDao.update(500, "Bob");
+        Customer bob = customerDao.findByName("Bob");
+        assertEquals(bob.getPoints(), 500);
     }
 }

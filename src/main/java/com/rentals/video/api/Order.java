@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 /**
+ * Representation of a request to rent one or more films.
+ *
  * @author mcarter
  */
 public class Order {
@@ -13,6 +15,9 @@ public class Order {
     private List<String> films;
     private int days;
     private int price;
+
+    public Order() {
+    }
 
     public Order(String customer, List<String> films, int days) {
         this.customer = customer;

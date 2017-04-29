@@ -17,6 +17,9 @@ public interface CustomerDao {
     @SqlBatch("insert into Customer values(:name, :points, :fines)")
     void insert(@BindBean List<Customer> customers);
 
+    @SqlUpdate("update Customer set points = :points where name = :name")
+    void update(@Bind("points") int points, @Bind("name") String name);
+
 	@SqlQuery("select * from Customer where name = :name")
 	Customer findByName(@Bind("name") String name);
 }

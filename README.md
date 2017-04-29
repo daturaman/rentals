@@ -4,6 +4,10 @@
 - Using db to keep track of points, rentals and have inventory. Keeping it simple so
 using simple string names as identifiers for films, customers; no foreign keys, constraints etc
 
+Database population has been simplified to keep focus on the application itself
+
+Assume that there are multiple copies of films, so no testing for availability
+
 #https://nbsoftsolutions.com/blog/getting-started-with-dropwizard-testing.html
 #http://www.dropwizard.io/1.1.0/docs/manual/jdbi.html
 #http://jdbi.org/sql_object_api_queries/
