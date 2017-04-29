@@ -1,13 +1,14 @@
 package com.rentals.video;
 
-import org.skife.jdbi.v2.DBI;
-
+import com.rentals.video.db.CustomerDao;
 import com.rentals.video.db.FilmDao;
-
+import com.rentals.video.db.RentalDao;
+import com.rentals.video.resources.RentalResource;
 import io.dropwizard.Application;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import org.skife.jdbi.v2.DBI;
 
 public class RentalsApplication extends Application<RentalsConfiguration> {
 
@@ -29,7 +30,9 @@ public class RentalsApplication extends Application<RentalsConfiguration> {
 	public void run(final RentalsConfiguration configuration, final Environment environment) {
 		final DBIFactory factory = new DBIFactory();
 		final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "h2");
-		final FilmDao dao = jdbi.onDemand(FilmDao.class);
-		//FIXME environment.jersey().register(new FilmService(dao));
-	}
+        final FilmDao filmDao = jdbi.onDemand(FilmDao.class);
+        final RentalDao rentalDao = jdbi.onDemand(RentalDao.class);
+        final CustomerDao customerDao = jdbi.onDemand(CustomerDao.class);
+        environment.jersey().register(new RentalResource(filmDao, customerDao, rentalDao));
+    }
 }

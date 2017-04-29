@@ -1,8 +1,8 @@
 # Rentals
 
 # Considerations
-- How to represent the film inventory - file or db? Sql or NoSql?
-- How to represent the three film types - New release, regular and oldie.
+- Using db to keep track of points, rentals and have inventory. Keeping it simple so
+using simple string names as identifiers for films, customers; no foreign keys, constraints etc
 
 #https://nbsoftsolutions.com/blog/getting-started-with-dropwizard-testing.html
 #http://www.dropwizard.io/1.1.0/docs/manual/jdbi.html

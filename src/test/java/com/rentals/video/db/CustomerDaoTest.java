@@ -1,17 +1,16 @@
 package com.rentals.video.db;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.Collections;
-import java.util.List;
-
+import com.rentals.video.api.Customer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 
-import com.rentals.video.api.Customer;
+import java.util.Collections;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class CustomerDaoTest {
 	private Handle handle;
@@ -24,8 +23,8 @@ public class CustomerDaoTest {
 		handle = dbi.open();
 		CustomerDao customerDao = handle.attach(CustomerDao.class);
 		customerDao.createTable();
-		customers = Collections.singletonList(new Customer("Bob", 0, 0));
-		customerDao.insert(customers);
+        customers = Collections.singletonList(new Customer("Bob", 250, 10));
+        customerDao.insert(customers);
 	}
 
 	@After
@@ -35,9 +34,8 @@ public class CustomerDaoTest {
 
 	@Test
 	public void canFindCustomerByName(){
-		final String expectedName = "Bob";
 		CustomerDao customerDao = dbi.onDemand(CustomerDao.class);
-		Customer actualFilm = customerDao.findByName(expectedName);
-		assertEquals(customers.get(0), actualFilm);
-	}
+        Customer bob = customerDao.findByName("Bob");
+        assertEquals(customers.get(0), bob);
+    }
 }

@@ -1,6 +1,9 @@
 package com.rentals.video.resources;
 
-import java.util.Collection;
+import com.rentals.video.api.Rental;
+import com.rentals.video.db.CustomerDao;
+import com.rentals.video.db.FilmDao;
+import com.rentals.video.db.RentalDao;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -9,8 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import com.rentals.video.api.Rental;
+import java.util.Collection;
 
 /**
  * @author mcarter
@@ -19,11 +21,22 @@ import com.rentals.video.api.Rental;
 @Produces(MediaType.APPLICATION_JSON)
 public class RentalResource {
 
-	@POST
-	public Response rentFilm(@NotNull @Valid Collection<Rental> rentals)
+    private FilmDao filmDao;
+    private CustomerDao customerDao;
+    private RentalDao rentalDao;
+
+    public RentalResource(FilmDao filmDao, CustomerDao customerDao, RentalDao rentalDao) {
+        this.filmDao = filmDao;
+        this.customerDao = customerDao;
+        this.rentalDao = rentalDao;
+    }
+
+    @POST
+    public Response rentFilm(@NotNull @Valid Collection<Rental> rentals)
 	{
-		//rentals.forEach(rental -> System.out.println(rental.getFilm().getTitle()));
-		//Persist the rentals, update customer and return a receipt with the calculated total
-		return Response.ok("Matrix 11 (New release) 1 days 40 SEK").build();
-	}
+        //Look up film and customer from db
+        //Persist the rentals, update customer points and return a receipt with the calculated total/points
+        return Response.ok("Matrix 11 (New release) 1 days 40 SEK").build();
+
+    }
 }

@@ -1,32 +1,46 @@
 package com.rentals.video.api;
 
-import java.util.Collection;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
 
 /**
  * @author mcarter
  */
 public class Order {
 
-	int total;
-	Collection<Rental> rentals;
+    private String customer;
+    private List<String> films;
+    private int days;
+    private int price;
 
-	public Order() {
-	}
+    public Order(String customer, List<String> films, int days) {
+        this.customer = customer;
+        this.films = films;
+        this.days = days;
+    }
 
-	public Order(int total, Collection<Rental> rentals) {
-		this.total = total;
-		this.rentals = rentals;
-	}
+    @JsonProperty
+    public String getCustomer() {
+        return customer;
+    }
 
-	@JsonProperty
-	public int getTotal() {
-		return total;
-	}
+    @JsonProperty
+    public List<String> getFilms() {
+        return films;
+    }
 
-	@JsonProperty
-	public Collection<Rental> getRentals() {
-		return rentals;
-	}
+    @JsonProperty
+    public int getDays() {
+        return days;
+    }
+
+    @JsonProperty
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }
