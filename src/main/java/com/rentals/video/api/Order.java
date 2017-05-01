@@ -5,24 +5,23 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 /**
- * Representation of a request to rent one or more films.
+ * Represents a completed order for rentals, detailing each individual {@link Rental} and a total price.
  *
  * @author mcarter
  */
 public class Order {
 
     private String customer;
-    private List<String> films;
-    private int days;
+    private List<Rental> items;
     private int price;
 
     public Order() {
     }
 
-    public Order(String customer, List<String> films, int days) {
+    public Order(String customer, List<Rental> items, int price) {
         this.customer = customer;
-        this.films = films;
-        this.days = days;
+        this.items = items;
+        this.price = price;
     }
 
     @JsonProperty
@@ -31,21 +30,12 @@ public class Order {
     }
 
     @JsonProperty
-    public List<String> getFilms() {
-        return films;
-    }
-
-    @JsonProperty
-    public int getDays() {
-        return days;
+    public List<Rental> getItems() {
+        return items;
     }
 
     @JsonProperty
     public int getPrice() {
         return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
     }
 }

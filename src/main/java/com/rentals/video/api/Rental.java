@@ -12,16 +12,22 @@ import java.util.Date;
 public class Rental {
 
     private String customer;
-    private String film;//TODO this should be a list - assume that due covers all films and is not variable
+    private String film;
     private Date due;
+    private Date returned;
+    private int days;
+    private int price;
 
     public Rental() {
     }
 
-    public Rental(String customer, String film, Date due) {
+    public Rental(String film, String customer, int days, int price, Date due, Date returned) {
         this.customer = customer;
         this.film = film;
         this.due = due;
+        this.days = days;
+        this.price = price;
+        this.returned = returned;
     }
 
     @JsonProperty
@@ -37,5 +43,25 @@ public class Rental {
     @JsonProperty
     public Date getDue() {
         return due;
+    }
+
+    @JsonProperty
+    public Date getReturned() {
+        return returned;
+    }
+
+    @JsonProperty
+    public int getDays() {
+        return days;
+    }
+
+    @JsonProperty
+    public int getPrice() {
+        return price;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s %d days %d SEK", film, days, price);
     }
 }
