@@ -20,7 +20,7 @@ import java.util.*;
  *
  * @author mcarter
  */
-@Path("/rentals")
+@Path("/rentals/{customer}")
 @Produces(MediaType.APPLICATION_JSON)
 public class RentalResource {
 
@@ -40,15 +40,21 @@ public class RentalResource {
     }
 
     @POST
-    @Path("/{customer}")
     public Order rentFilms(@PathParam("customer") String customer, @NotNull @Valid Map<String, Integer> filmsToRent) {
         return process(customer, filmsToRent);
     }
 
-    //TODO return a film
     @PUT
-    public Response returnFilms() {
-        //Delete each film from rental; calculate fines and add to customer
+    public Response returnFilms(@PathParam("customer") String customerName, @NotNull @Valid List<Rental> rentals) {
+        //Mark each rental as returned; calculate fines and add to customer
+        Customer customer = customerDao.findByName(customerName);
+        int fines = 0;
+        for (Rental rental : rentals) {
+            Film film = filmDao.findByTitle(rental.getFilm());
+            //Get rental due, calculate how many days are late, add to fines
+            //Reuse switch - fines calculation is same as price
+        }
+        //rentalDao.markRentalsAsReturned();
         return null;
     }
 
@@ -89,6 +95,10 @@ public class RentalResource {
         customerDao.update(points, customer.getName());
 
         return new Order(customerName, rentals, totalPrice);
+    }
+
+    private int calculateRentalFee(Film film, int days) {
+        return 0;
     }
 
     private Date calculateDueDate(int days) {

@@ -49,6 +49,7 @@ public class RentalResourceIntegrationTest {
     private Handle handle;
     private CustomerDao customerDao;
     private RentalDao rentalDao;
+    private Client client;
 
     @Before
     public void setUp() throws Exception {
@@ -56,6 +57,7 @@ public class RentalResourceIntegrationTest {
         handle = dbi.open();
         customerDao = handle.attach(CustomerDao.class);
         rentalDao = handle.attach(RentalDao.class);
+        client = new JerseyClientBuilder().build();
     }
 
     @After
@@ -68,7 +70,6 @@ public class RentalResourceIntegrationTest {
         assertEquals(customerDao.findByName("Bob").getPoints(), 0);
         assertEquals(rentalDao.findDueRentalsForCustomer("Bob").size(), 0);
 
-        Client client = new JerseyClientBuilder().build();
         Map<String, Integer> films = new HashMap<>();
         films.put("Conan The Librarian", 5);
         films.put("Horror", 2);
@@ -87,6 +88,7 @@ public class RentalResourceIntegrationTest {
         Date due = df.parse("2017-04-20");
         rentalDao.insert(Collections.singletonList(new Rental("Romcom", "Bob", 10, 400, df.parse("2017-04-20"), null)));
 
-
+//        Response resp = client.target("http://localhost:8080/rentals/Bob")
+//                .request().put(Entity.entity(films, MediaType.APPLICATION_JSON_TYPE));
     }
 }
