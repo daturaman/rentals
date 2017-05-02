@@ -1,5 +1,7 @@
 package com.rentals.video.api;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Represents a customer of the rentals service, providing data on points and fines accumulated.
  *
@@ -11,20 +13,26 @@ public class Customer {
     private int points;
     private int fines;
 
+    public Customer() {
+    }
+
     public Customer(String name, int points, int fines) {
         this.name = name;
         this.points = points;
         this.fines = fines;
     }
 
+    @JsonProperty
     public String getName() {
         return name;
     }
 
+    @JsonProperty
     public int getPoints() {
         return points;
     }
 
+    @JsonProperty
     public int getFines() {
         return fines;
     }
@@ -38,9 +46,7 @@ public class Customer {
         Customer customer = (Customer) o;
         if (getPoints() != customer.getPoints())
             return false;
-        if (getFines() != customer.getFines())
-            return false;
-        return getName().equals(customer.getName());
+        return getFines() == customer.getFines() && getName().equals(customer.getName());
     }
 
     @Override

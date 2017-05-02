@@ -1,15 +1,10 @@
 package com.rentals.video.db;
 
-import java.util.List;
-
-import org.skife.jdbi.v2.sqlobject.Bind;
-import org.skife.jdbi.v2.sqlobject.BindBean;
-import org.skife.jdbi.v2.sqlobject.SqlBatch;
-import org.skife.jdbi.v2.sqlobject.SqlQuery;
-import org.skife.jdbi.v2.sqlobject.SqlUpdate;
+import com.rentals.video.api.Film;
+import org.skife.jdbi.v2.sqlobject.*;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 
-import com.rentals.video.api.Film;
+import java.util.List;
 
 /**
  * DAO for crud operations on Films.
@@ -29,4 +24,7 @@ public interface FilmDao {
 
 	@SqlQuery("select * from Film where title = :title")
 	Film findByTitle(@Bind("title") String title);
+
+    @SqlQuery("select * from Film")
+    List<Film> findAll();
 }

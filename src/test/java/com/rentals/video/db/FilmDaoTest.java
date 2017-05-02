@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -24,7 +24,7 @@ public class FilmDaoTest {
 		handle = dbi.open();
 		FilmDao filmDao = handle.attach(FilmDao.class);
 		filmDao.createTable();
-        filmList = Collections.singletonList(new Film("Predator", Film.FilmType.OLDIE));
+        filmList = Arrays.asList(new Film("Predator", Film.FilmType.OLDIE), new Film("Scanners", Film.FilmType.OLDIE));
         filmDao.insert(filmList);
 	}
 
@@ -40,4 +40,10 @@ public class FilmDaoTest {
 		Film actualFilm = filmDao.findByTitle(expectedTitle);
 		assertEquals(filmList.get(0), actualFilm);
 	}
+
+    @Test
+    public void canRetrieveAllFilms() {
+        FilmDao filmDao = dbi.onDemand(FilmDao.class);
+        assertEquals(filmDao.findAll().size(), filmList.size());
+    }
 }

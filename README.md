@@ -4,17 +4,14 @@
 - I've opted for an H2 in-memory database for the sake of expediency, more than anything. JDBI provided a fairly pain-free
 integration and allowed me to focus on the application itself. The database set up occurs when the application starts and
 is hard coded for convenience/demonstration only.
-- I'm a strong advocate of testing and even TDD, but I've kept the tests simple to save time. Under other circumstances
- I may have opted for parameterised tests, requirements based functional testing etc.
+- Normally I would keep business logic out of REST resource classes, preferring to delegate to a service. I started to do that
+here but felt that I was going against the grain somewhat with how Dropwizard organises things.
+- The testing is fairly rudimentary and not reflective of how I like to test day to day.
 - I've used Java Dates but am conscious of their limitations and would have chosen something like Joda Time, given more time.
 - I've used ints to represent money for simplicity only.
-- I've assumed that there are limitless supplies of each film.
+- I've assumed that there are limitless supplies of each film. Obviously not realistic.
 - I've kept error handling and defensive code to a minimum. I've not implemented any health checks.
- Again, not what I would do for production ready code.
-
-#https://nbsoftsolutions.com/blog/getting-started-with-dropwizard-testing.html
-#http://www.dropwizard.io/1.1.0/docs/manual/jdbi.html
-#http://jdbi.org/sql_object_api_queries/
+ Again, not what I would do under normal development conditions.
 
 How to start the Rentals application
 ---
@@ -25,9 +22,10 @@ How to start the Rentals application
 
 Rentals
 ---
-There are only five films and four customers (Bob, Sue, Pam and Jim) that are initialised when the application starts up.
+There are only five films (Conan The Librarian, Ghandi II, 101 Alsatians, Romcom and Horror)
+ and four customers (Bob, Sue, Pam and Jim) that are initialised by RentalsApplication#run on start up.
 
-Rent one or more films by making a post request (using a Chrome app such as Postman) with the customer's name in the
+Rent one or more films by making a http post request (e.g. using a Chrome app such as Postman) with the customer's name in the
 path after /rentals/ and a map of films/days
 in the request body:
 
@@ -38,5 +36,18 @@ http://localhost/rentals/Bob
     "Romcom" : 7
 }
 
-Return one or more films by making a put request with the customer's name in the path after /rentals/ and a list of rentals
-in the request body:
+Return one or more films by making a http put request with the customer's name in the path after /rentals/ and a json list of rentals
+in the request body (only the 'customer' and 'film' fields are necessary here)'':
+
+E.g.
+http://localhost/rentals/Bob
+[
+    {
+      "customer": "Bob",
+      "film": "Horror",
+      "due": "2017-04-28",
+      "returned": null,
+      "days": 7,
+      "price": 200
+    }
+]
