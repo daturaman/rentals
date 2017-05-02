@@ -7,14 +7,20 @@
  */
 package com.rentals.video.resources;
 
-import com.rentals.video.RentalsApplication;
-import com.rentals.video.RentalsConfiguration;
-import com.rentals.video.api.Order;
-import com.rentals.video.api.Rental;
-import com.rentals.video.db.CustomerDao;
-import com.rentals.video.db.RentalDao;
-import io.dropwizard.testing.ResourceHelpers;
-import io.dropwizard.testing.junit.DropwizardAppRule;
+import static org.junit.Assert.assertEquals;
+
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
 import org.glassfish.jersey.client.JerseyClientBuilder;
 import org.junit.After;
 import org.junit.Before;
@@ -23,18 +29,15 @@ import org.junit.Test;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import com.rentals.video.RentalsApplication;
+import com.rentals.video.RentalsConfiguration;
+import com.rentals.video.api.Rental;
+import com.rentals.video.api.RentalResponse;
+import com.rentals.video.db.CustomerDao;
+import com.rentals.video.db.RentalDao;
 
-import static org.junit.Assert.assertEquals;
+import io.dropwizard.testing.ResourceHelpers;
+import io.dropwizard.testing.junit.DropwizardAppRule;
 
 /**
  * Integration test of the rentals application
@@ -76,19 +79,25 @@ public class RentalResourceIntegrationTest {
         Response resp = client.target("http://localhost:8080/rentals/Bob")
                 .request().post(Entity.entity(films, MediaType.APPLICATION_JSON_TYPE));
 
-        Order complete = (Order) resp.readEntity(Order.class);
-        assertEquals(230, complete.getPrice());
+        RentalResponse complete = resp.readEntity(RentalResponse.class);
+        assertEquals(230, complete.getFee());
         assertEquals(customerDao.findByName("Bob").getPoints(), 3);
         assertEquals(rentalDao.findDueRentalsForCustomer("Bob").size(), 2);
     }
 
     @Test
     public void bobReturnsHisFilmsLateAndGetsFined() throws ParseException {
-        DateFormat df = DateFormat.getDateTimeInstance();
-        Date due = df.parse("2017-04-20");
-        rentalDao.insert(Collections.singletonList(new Rental("Romcom", "Bob", 10, 400, df.parse("2017-04-20"), null)));
+        Calendar due = Calendar.getInstance();
+        due.add(Calendar.DAY_OF_MONTH, -2);
+        final List<Rental> rentals = Collections.singletonList(new Rental("Romcom", "Bob", 10, 400, due.getTime(), null));
+        rentalDao.insert(rentals);
 
-//        Response resp = client.target("http://localhost:8080/rentals/Bob")
-//                .request().put(Entity.entity(films, MediaType.APPLICATION_JSON_TYPE));
+        Response resp = client.target("http://localhost:8080/rentals/Bob")
+                .request().put(Entity.entity(rentals, MediaType.APPLICATION_JSON_TYPE));
+
+        RentalResponse complete = resp.readEntity(RentalResponse.class);
+        assertEquals(80, complete.getFee());
+        assertEquals(customerDao.findByName("Bob").getFines(), 90);
+        assertEquals(rentalDao.findDueRentalsForCustomer("Bob").size(), 0);
     }
 }

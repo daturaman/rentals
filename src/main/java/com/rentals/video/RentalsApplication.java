@@ -1,18 +1,20 @@
 package com.rentals.video;
 
+import java.util.Arrays;
+
+import org.skife.jdbi.v2.DBI;
+
 import com.rentals.video.api.Customer;
 import com.rentals.video.api.Film;
 import com.rentals.video.db.CustomerDao;
 import com.rentals.video.db.FilmDao;
 import com.rentals.video.db.RentalDao;
 import com.rentals.video.resources.RentalResource;
+
 import io.dropwizard.Application;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import org.skife.jdbi.v2.DBI;
-
-import java.util.Arrays;
 
 public class RentalsApplication extends Application<RentalsConfiguration> {
 
@@ -27,7 +29,6 @@ public class RentalsApplication extends Application<RentalsConfiguration> {
 
     @Override
     public void initialize(final Bootstrap<RentalsConfiguration> bootstrap) {
-        // TODO: application initialization
     }
 
     @Override

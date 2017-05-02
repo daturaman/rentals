@@ -1,11 +1,11 @@
 package com.rentals.video.api;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
- * Clients can use this bean to make rentals.
+ * The actual resource published by the Rental api.
  *
  * @author mcarter
  */

@@ -3,50 +3,53 @@ package com.rentals.video.api;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
+ * Represents a Film and its type - New Release, Regular or Oldie.
+ * 
  * @author mcarter
  */
 public class Film {
 
-    private String title;
-    private FilmType type;
+	private String title;
+	private FilmType type;
 
-    public Film() {
-    }
+	public Film() {
+	}
 
-    public Film(String title, FilmType type) {
-        this.title = title;
-        this.type = type;
-    }
+	public Film(String title, FilmType type) {
+		this.title = title;
+		this.type = type;
+	}
 
-    @JsonProperty
-    public String getTitle() {
-        return title;
-    }
+	@JsonProperty
+	public String getTitle() {
+		return title;
+	}
 
-    @JsonProperty
-    public FilmType getType() {
-        return type;
-    }
+	@JsonProperty
+	public FilmType getType() {
+		return type;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Film film = (Film) o;
+		if (!title.equals(film.title))
+			return false;
+		return type == film.type;
+	}
 
-        Film film = (Film) o;
+	@Override
+	public int hashCode() {
+		int result = title.hashCode();
+		result = 31 * result + type.hashCode();
+		return result;
+	}
 
-        if (!title.equals(film.title)) return false;
-        return type == film.type;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = title.hashCode();
-        result = 31 * result + type.hashCode();
-        return result;
-    }
-
-    public enum FilmType {
-        NEW_RELEASE, REGULAR, OLDIE
-    }
+	public enum FilmType {
+		NEW_RELEASE, REGULAR, OLDIE
+	}
 }

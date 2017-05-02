@@ -1,10 +1,15 @@
 package com.rentals.video.db;
 
-import com.rentals.video.api.Rental;
-import org.skife.jdbi.v2.sqlobject.*;
+import java.util.List;
+
+import org.skife.jdbi.v2.sqlobject.Bind;
+import org.skife.jdbi.v2.sqlobject.BindBean;
+import org.skife.jdbi.v2.sqlobject.SqlBatch;
+import org.skife.jdbi.v2.sqlobject.SqlQuery;
+import org.skife.jdbi.v2.sqlobject.SqlUpdate;
 import org.skife.jdbi.v2.sqlobject.customizers.RegisterMapper;
 
-import java.util.List;
+import com.rentals.video.api.Rental;
 
 /**
  * Responsible for persisting Rentals to the database.
@@ -15,6 +20,9 @@ import java.util.List;
 public interface RentalDao {
     @SqlUpdate("create table Rental (film varchar(100) primary key, customer varchar(100), due date, returned date null, days int, price int)")
     void createTable();
+
+    @SqlUpdate("drop table Rental")
+    void dropTable();
 
     @SqlBatch("update Rental set returned = current_date() where customer = :customer and film = :film")
     void markRentalsAsReturned(@BindBean List<Rental> rentals);

@@ -1,16 +1,17 @@
 package com.rentals.video.db;
 
-import com.rentals.video.api.Customer;
+import static org.junit.Assert.assertEquals;
+
+import java.util.Collections;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.skife.jdbi.v2.DBI;
 import org.skife.jdbi.v2.Handle;
 
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
+import com.rentals.video.api.Customer;
 
 public class CustomerDaoTest {
 	private Handle handle;
@@ -42,7 +43,7 @@ public class CustomerDaoTest {
 
     @Test
     public void canUpdateCustomerPoints() {
-        customerDao.update(500, "Bob");
+        customerDao.updatePoints(500, "Bob");
         Customer bob = customerDao.findByName("Bob");
         assertEquals(bob.getPoints(), 500);
     }
