@@ -22,15 +22,19 @@ How to start the Rentals application
 
 Rentals
 ---
-There are only five films (Conan The Librarian, Ghandi II, 101 Alsatians, Romcom and Horror)
- and four customers (Bob, Sue, Pam and Jim) that are initialised by RentalsApplication#run on start up.
+There are only five films that are initialised by RentalsApplication#run on start up.
+
+You can get a list of available films and customers with a get request:
+
+http://localhost:8080/films
+http://localhost:8080/customers
 
 Rent one or more films by making a http post request (e.g. using a Chrome app such as Postman) with the customer's name in the
 path after /rentals/ and a map of films/days
 in the request body:
 
 E.g.
-http://localhost/rentals/Bob
+http://localhost:8080/rentals/Bob
 {
     "Horror" : 5,
     "Romcom" : 7
@@ -40,7 +44,7 @@ Return one or more films by making a http put request with the customer's name i
 in the request body (only the 'customer' and 'film' fields are necessary here)'':
 
 E.g.
-http://localhost/rentals/Bob
+http://localhost:8080/rentals/Bob
 [
     {
       "customer": "Bob",

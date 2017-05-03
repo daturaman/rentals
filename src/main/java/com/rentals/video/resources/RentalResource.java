@@ -1,5 +1,22 @@
 package com.rentals.video.resources;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
 import com.rentals.video.api.Customer;
 import com.rentals.video.api.Film;
 import com.rentals.video.api.Rental;
@@ -7,13 +24,6 @@ import com.rentals.video.api.RentalResponse;
 import com.rentals.video.db.CustomerDao;
 import com.rentals.video.db.FilmDao;
 import com.rentals.video.db.RentalDao;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * RESTful representation of a video rental, which consists of one or more films to be rented for n days.
@@ -28,9 +38,9 @@ public class RentalResource {
     private static final int REGULAR_DAYS = 3;
     private static final int OLDIE_DAYS = 5;
     private static final int REGULAR_POINTS = 1;
-    private FilmDao filmDao;
-    private CustomerDao customerDao;
-    private RentalDao rentalDao;
+    private final FilmDao filmDao;
+    private final CustomerDao customerDao;
+    private final RentalDao rentalDao;
     private static final int PREMIUM_PRICE = 40;
     private static final int BASIC_PRICE = 30;
 

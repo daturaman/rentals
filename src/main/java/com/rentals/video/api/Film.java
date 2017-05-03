@@ -12,6 +12,7 @@ public class Film {
 	private String title;
 	private FilmType type;
 
+	@SuppressWarnings("unused")
 	public Film() {
 	}
 

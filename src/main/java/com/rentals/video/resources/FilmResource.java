@@ -1,13 +1,14 @@
 package com.rentals.video.resources;
 
-import com.rentals.video.api.Film;
-import com.rentals.video.db.FilmDao;
+import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
+
+import com.rentals.video.api.Film;
+import com.rentals.video.db.FilmDao;
 
 /**
  * Provides access to the films inventory
@@ -16,7 +17,7 @@ import java.util.List;
 @Produces(MediaType.APPLICATION_JSON)
 public class FilmResource {
 
-    private FilmDao filmDao;
+    private final FilmDao filmDao;
 
     public FilmResource(FilmDao filmDao) {
         this.filmDao = filmDao;

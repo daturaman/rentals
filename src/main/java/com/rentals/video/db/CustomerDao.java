@@ -19,9 +19,6 @@ public interface CustomerDao {
 	@SqlUpdate("create table Customer (name varchar(100), points int default 0, fines int default 0)")
 	void createTable();
 
-	@SqlUpdate("drop table Customer")
-	void dropTable();
-
     @SqlBatch("insert into Customer values(:name, :points, :fines)")
     void insert(@BindBean List<Customer> customers);
 

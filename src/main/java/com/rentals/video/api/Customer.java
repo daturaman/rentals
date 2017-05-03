@@ -13,6 +13,7 @@ public class Customer {
     private int points;
     private int fines;
 
+    @SuppressWarnings("unused")
     public Customer() {
     }
 
